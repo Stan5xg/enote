@@ -1,0 +1,2 @@
+# enote
+Electronic notes project.

@@ -13,7 +13,7 @@ import javax.persistence.Table;
 @Data
 @Entity
 @Table(name = "user")
-public class UserEntity {
+public class User {
 
     @Id
     @Column(nullable = false)

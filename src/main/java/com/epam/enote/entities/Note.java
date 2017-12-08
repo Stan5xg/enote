@@ -18,7 +18,7 @@ public class Note {
     @Column(name="title", nullable = true)
     private String title;
 
-    @Column(name="conttent", nullable = true)
+    @Column(name="content", nullable = true)
     private String content;
 
     @ManyToOne

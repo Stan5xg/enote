@@ -25,6 +25,8 @@ public class TestJdbc {
 //    @Qualifier("userTemplateRepo")
 //    UserRepo userRepo;
 
+
+
     @Autowired
     private ApplicationContext appContext;
 

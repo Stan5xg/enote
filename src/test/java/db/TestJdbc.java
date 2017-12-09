@@ -18,7 +18,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 
 @RunWith(SpringJUnit4ClassRunner.class)
-@ContextConfiguration(classes = {TestDataConfig.class, AppConfig.class})
+@ContextConfiguration(classes = {AppConfig.class})
 public class TestJdbc {
 
 //    @Autowired
@@ -34,8 +34,9 @@ public class TestJdbc {
 
     @Test
     public void test() {
-        JdbcTemplate template = appContext.getBean(JdbcTemplate.class);
-        System.out.println(template.queryForList("SELECT * FROM `user`;"));
+        System.out.println("===========================");
+        System.out.println(appContext.getStartupDate());
+        System.out.println("===========================");
     }
 
 

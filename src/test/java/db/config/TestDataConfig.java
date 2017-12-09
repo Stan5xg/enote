@@ -20,7 +20,7 @@ import javax.sql.DataSource;
 import java.io.IOException;
 import java.sql.Driver;
 
-
+@Deprecated
 @Configuration
 @PropertySource("classpath:db/db.properties")
 public class TestDataConfig {

@@ -9,6 +9,11 @@ http://www.springframework.org/schema/beans/spring-beans.xsd">
         <property name="passwordHash" value="as8a779$2"/>
     </bean>
 
+    <bean id="user2" class="com.epam.enote.entities.User">
+        <property name="username" value="Sergei"/>
+        <property name="passwordHash" value="fdg4562v"/>
+    </bean>
+
     <bean id="tag" class="com.epam.enote.entities.Tag">
         <property name="name" value="fun"/>
     </bean>

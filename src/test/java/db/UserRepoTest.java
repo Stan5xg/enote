@@ -2,11 +2,7 @@ package db;
 
 import com.epam.enote.config.AppConfig;
 import com.epam.enote.entities.User;
-import com.epam.enote.repos.NoteRepo;
-import com.epam.enote.repos.NotepadRepo;
-import com.epam.enote.repos.TagRepo;
 import com.epam.enote.repos.UserRepo;
-import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -19,44 +15,32 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
 import java.sql.SQLException;
 import java.util.List;
+import java.util.NoSuchElementException;
+import java.util.Optional;
 
+import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(classes = {AppConfig.class})
-public class GeneralTest {
+public class UserRepoTest {
 
+    public static final int DEFAULT_ID = 1;
+    public static final int NOT_EXISTENT_ID = 99;
     @Autowired
     private ApplicationContext appContext;
 
     @Autowired
     private UserRepo userRepo;
 
-    @Autowired
-    private TagRepo tagRepo;
-
-    @Autowired
-    private NoteRepo noteRepo;
-
-    @Autowired
-    private NotepadRepo notepadRepo;
-
-
     ConfigurableApplicationContext configurableApplicationContext;
 
     @Before
-    public void setUp(){
+    public void setUp() {
         configurableApplicationContext = new ClassPathXmlApplicationContext("db/testData.xml");
-        userRepo.save(configurableApplicationContext.getBean(User.class));
-//        notepadRepo.save(configurableApplicationContext.getBean(Notepad.class));
-//        noteRepo.save(configurableApplicationContext.getBean(Note.class));
-//        tagRepo.save(configurableApplicationContext.getBean(Tag.class));
+        userRepo.save((User) configurableApplicationContext.getBean("user"));
     }
 
-    @After
-    public void tearDown() throws Exception {
-
-    }
 
     @Test
     public void testUserRepo() {
@@ -69,5 +53,33 @@ public class GeneralTest {
         System.out.println(userRepo.findAll().size());
         List<User> users = userRepo.findAll();
         System.out.println(users);
+    }
+
+    @Test(expected = NoSuchElementException.class)
+    public void testNoFindById() {
+        userRepo.findById(NOT_EXISTENT_ID).get();
+    }
+
+    @Test
+    public void testFindById() {
+        assertNotNull(userRepo.findById(DEFAULT_ID).get());
+    }
+
+
+    @Test
+    public void testUpdate() {
+        User user = userRepo.findOneByUsername("Stan");
+        user.setPasswordHash("new");
+        userRepo.saveAndFlush(user);
+        assertEquals("new", user.getPasswordHash());
+    }
+
+    @Test
+    public void testDelete() {
+        User user = userRepo.findOneByUsername("Stan");
+        assertNotNull(userRepo.findById(user.getId()));
+        userRepo.delete(user);
+        assertEquals(userRepo.findById(user.getId()), Optional.empty());
+
     }
 }

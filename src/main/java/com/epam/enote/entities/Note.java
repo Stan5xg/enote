@@ -22,7 +22,7 @@ public class Note {
     private String content;
 
     @ManyToOne
-    @JoinColumn(name = "notepad_id", nullable = false)
+    @JoinColumn(name = "notepad_id", referencedColumnName = "id", nullable = false)
     private Notepad notepad;
 
     @ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)

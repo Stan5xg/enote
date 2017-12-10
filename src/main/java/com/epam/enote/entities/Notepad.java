@@ -21,10 +21,10 @@ public class Notepad {
     private String name;
 
     @ManyToOne
-    @JoinColumn(name = "user_id", nullable = false)
+    @JoinColumn(name = "user_id", referencedColumnName = "id", nullable = false)
     private User user;
 
-    @OneToMany(mappedBy = "notepad", cascade = {CascadeType.ALL})
+    @OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
     private Set<Note> notes = new HashSet<>();
 
     public boolean addNote(Note note) {

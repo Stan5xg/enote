@@ -33,7 +33,7 @@ public class User {
     @Column(name = "password_hash")
     public String passwordHash;
 
-    @OneToMany(fetch = FetchType.EAGER, mappedBy = "user", cascade = {CascadeType.ALL})
+    @OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
     private Set<Notepad> notepads = new HashSet<>();
 
     public boolean addNotepad(Notepad notepad) {

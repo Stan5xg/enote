@@ -18,10 +18,18 @@ http://www.springframework.org/schema/beans/spring-beans.xsd">
         <property name="name" value="fun"/>
     </bean>
 
+    <bean id="tag2" class="com.epam.enote.entities.Tag">
+        <property name="name" value="song"/>
+    </bean>
+
     <bean id="note" class="com.epam.enote.entities.Note">
         <property name="title" value="kazoo stuff"/>
         <property name="content" value="fun fun fun fun fun fun fun fun fun"/>
-        <property name="notepad" ref="notepad"/>
+    </bean>
+
+    <bean id="note2" class="com.epam.enote.entities.Note">
+        <property name="title" value="what is love"/>
+        <property name="content" value="baby don't hurt me, don't hurt me, no more"/>
     </bean>
 
     <bean id="notepad" class="com.epam.enote.entities.Notepad">

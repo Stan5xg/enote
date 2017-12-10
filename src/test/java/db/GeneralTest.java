@@ -29,45 +29,9 @@ public class GeneralTest {
     @Autowired
     private ApplicationContext appContext;
 
-    @Autowired
-    private UserRepo userRepo;
-
-    @Autowired
-    private TagRepo tagRepo;
-
-    @Autowired
-    private NoteRepo noteRepo;
-
-    @Autowired
-    private NotepadRepo notepadRepo;
-
-
-    ConfigurableApplicationContext configurableApplicationContext;
-
-    @Before
-    public void setUp(){
-        configurableApplicationContext = new ClassPathXmlApplicationContext("db/testData.xml");
-        userRepo.save(configurableApplicationContext.getBean(User.class));
-//        notepadRepo.save(configurableApplicationContext.getBean(Notepad.class));
-//        noteRepo.save(configurableApplicationContext.getBean(Note.class));
-//        tagRepo.save(configurableApplicationContext.getBean(Tag.class));
-    }
-
-    @After
-    public void tearDown() throws Exception {
-
-    }
-
     @Test
     public void testUserRepo() {
         assertNotNull("appContext should not be null", appContext);
-        assertNotNull("userRepo should not be null", userRepo);
     }
 
-    @Test
-    public void newTest() throws SQLException {
-        System.out.println(userRepo.findAll().size());
-        List<User> users = userRepo.findAll();
-        System.out.println(users);
-    }
 }

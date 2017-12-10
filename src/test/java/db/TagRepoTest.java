@@ -1,8 +1,10 @@
 package db;
 
 import com.epam.enote.config.AppConfig;
-import com.epam.enote.entities.User;
-import com.epam.enote.repos.UserRepo;
+import com.epam.enote.entities.Note;
+import com.epam.enote.entities.Tag;
+import com.epam.enote.repos.NoteRepo;
+import com.epam.enote.repos.TagRepo;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -24,7 +26,7 @@ import static org.junit.Assert.assertTrue;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(classes = {AppConfig.class})
-public class UserRepoTest {
+public class TagRepoTest {
 
     public static final int DEFAULT_ID = 1;
     public static final int NOT_EXISTENT_ID = 99;
@@ -32,59 +34,57 @@ public class UserRepoTest {
     private ApplicationContext appContext;
 
     @Autowired
-    private UserRepo userRepo;
+    private TagRepo tagRepo;
 
     ConfigurableApplicationContext configurableApplicationContext;
 
     @Before
     public void setUp() {
         configurableApplicationContext = new ClassPathXmlApplicationContext("db/testData.xml");
-
-        User user = (User) configurableApplicationContext.getBean("user");
-        if (!userRepo.existsById(DEFAULT_ID)) {
-            userRepo.save(user);
+        Tag note = (Tag) configurableApplicationContext.getBean("tag");
+        if (!tagRepo.existsById(DEFAULT_ID)) {
+            tagRepo.save(note);
         }
     }
 
     @Test
-    public void testUserRepo() {
+    public void testTagRepo() {
         assertNotNull("appContext should not be null", appContext);
-        assertNotNull("userRepo should not be null", userRepo);
+        assertNotNull("userRepo should not be null", tagRepo);
     }
 
     @Test
     public void testFindAll() throws SQLException {
-        userRepo.save((User) configurableApplicationContext.getBean("user2"));
-        List<User> users = userRepo.findAll();
+        tagRepo.save((Tag) configurableApplicationContext.getBean("tag2"));
+        List<Tag> users = tagRepo.findAll();
         assertTrue(users.size() == 2);
     }
 
     @Test(expected = NoSuchElementException.class)
     public void testNoFindById() {
-        userRepo.findById(NOT_EXISTENT_ID).get();
+        tagRepo.findById(NOT_EXISTENT_ID).get();
     }
 
     @Test
     public void testFindById() {
-        assertNotNull(userRepo.findById(DEFAULT_ID).get());
+        assertNotNull(tagRepo.findById(DEFAULT_ID).get());
     }
 
 
     @Test
     public void testUpdate() {
-        User user = userRepo.findOneByUsername("Stan");
-        user.setPasswordHash("new");
-        userRepo.saveAndFlush(user);
-
-        assertEquals("new", user.getPasswordHash());
+        Tag tag = tagRepo.findOneByName("song");
+        tag.setName("meme");
+        tagRepo.saveAndFlush(tag);
+        Tag tagAltered = tagRepo.findOneByName("meme");
+        assertEquals("meme", tagAltered.getName());
     }
 
     @Test
     public void testDelete() {
-        User user = userRepo.findOneByUsername("Stan");
-        assertNotNull(userRepo.findById(user.getId()));
-        userRepo.delete(user);
-        assertEquals(userRepo.findById(user.getId()), Optional.empty());
-
+        Tag tag = tagRepo.findAll().get(0);
+        assertNotNull(tagRepo.findById(tag.getId()));
+        tagRepo.delete(tag);
+        assertEquals(tagRepo.findById(tag.getId()), Optional.empty());
     }
 }

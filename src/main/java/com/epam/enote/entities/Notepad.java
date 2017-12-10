@@ -1,15 +1,21 @@
 package com.epam.enote.entities;
 
-import lombok.Data;
+import lombok.EqualsAndHashCode;
+import lombok.Getter;
+import lombok.Setter;
+import lombok.ToString;
 import org.hibernate.validator.constraints.NotEmpty;
 
 import javax.persistence.*;
 import java.util.HashSet;
 import java.util.Set;
 
-@Data
 @Entity
 @Table(name = "notepad")
+@Getter
+@Setter
+@EqualsAndHashCode(exclude = {"notes", "user"})
+@ToString(exclude = {"notes", "user"})
 public class Notepad {
     @Id
     @Column(name="id", nullable = false)
@@ -24,11 +30,11 @@ public class Notepad {
     @JoinColumn(name = "user_id", nullable = false)
     private User user;
 
-//    @OneToMany(mappedBy = "notepad", cascade = {CascadeType.ALL})
-//    private Set<Note> notes = new HashSet<>();
-//
-//    public boolean addNote(Note note) {
-//        note.setNotepad(this);
-//        return notes.add(note);
-//    }
+   @OneToMany(mappedBy = "notepad", cascade = {CascadeType.ALL})
+    private Set<Note> notes = new HashSet<>();
+
+    public boolean addNote(Note note) {
+        note.setNotepad(this);
+        return notes.add(note);
+    }
 }

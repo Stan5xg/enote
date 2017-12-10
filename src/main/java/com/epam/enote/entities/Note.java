@@ -1,24 +1,30 @@
 package com.epam.enote.entities;
 
-import lombok.Data;
+import lombok.EqualsAndHashCode;
+import lombok.Getter;
+import lombok.Setter;
+import lombok.ToString;
 
 import javax.persistence.*;
 import java.util.HashSet;
 import java.util.Set;
 
-@Data
 @Entity
 @Table(name = "note")
+@Getter
+@Setter
+@EqualsAndHashCode(exclude = {"notepad", "tags"})
+@ToString(exclude = {"notepad", "tags"})
 public class Note {
     @Id
-    @Column(name="id", nullable = false)
+    @Column(name = "id", nullable = false)
     @GeneratedValue(strategy = GenerationType.AUTO)
     private int id;
 
-    @Column(name="title", nullable = true)
+    @Column(name = "title", nullable = true)
     private String title;
 
-    @Column(name="content", nullable = true)
+    @Column(name = "content", nullable = true)
     private String content;
 
     @ManyToOne

@@ -1,18 +1,13 @@
 package db;
 
 import com.epam.enote.config.AppConfig;
-import com.epam.enote.entities.Note;
-import com.epam.enote.entities.Notepad;
-import com.epam.enote.entities.Tag;
 import com.epam.enote.entities.User;
 import com.epam.enote.repos.NoteRepo;
 import com.epam.enote.repos.NotepadRepo;
 import com.epam.enote.repos.TagRepo;
 import com.epam.enote.repos.UserRepo;
-import org.h2.tools.Server;
 import org.junit.After;
 import org.junit.Before;
-import org.junit.BeforeClass;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -51,7 +46,7 @@ public class GeneralTest {
 
     @Before
     public void setUp(){
-        configurableApplicationContext = new ClassPathXmlApplicationContext("db/testData.properties");
+        configurableApplicationContext = new ClassPathXmlApplicationContext("db/testData.xml");
         userRepo.deleteAll();
         tagRepo.deleteAll();
         noteRepo.deleteAll();

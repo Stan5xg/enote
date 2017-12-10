@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+http://www.springframework.org/schema/beans/spring-beans.xsd">
+
+    <bean id="user" class="com.epam.enote.entities.User">
+        <property name="username" value="Stan"/>
+        <property name="passwordHash" value="as8a779$2"/>
+    </bean>
+
+    <bean id="tag" class="com.epam.enote.entities.Tag">
+        <property name="name" value="fun"/>
+    </bean>
+
+    <bean id="note" class="com.epam.enote.entities.Note">
+        <property name="title" value="kazoo stuff"/>
+        <property name="content" value="fun fun fun fun fun fun fun fun fun"/>
+        <property name="notepad" ref="notepad"/>
+    </bean>
+
+    <bean id="notepad" class="com.epam.enote.entities.Notepad">
+        <property name="name" value="fun notes"/>
+        <property name="user" ref="user"/>
+    </bean>
+
+
+</beans>

@@ -24,11 +24,11 @@ public class Notepad {
     @JoinColumn(name = "user_id", nullable = false)
     private User user;
 
-    @OneToMany(mappedBy = "notepad", cascade = {CascadeType.ALL})
-    private Set<Note> notes = new HashSet<>();
-
-    public boolean addNote(Note note) {
-        note.setNotepad(this);
-        return notes.add(note);
-    }
+//    @OneToMany(mappedBy = "notepad", cascade = {CascadeType.ALL})
+//    private Set<Note> notes = new HashSet<>();
+//
+//    public boolean addNote(Note note) {
+//        note.setNotepad(this);
+//        return notes.add(note);
+//    }
 }

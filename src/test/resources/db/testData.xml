@@ -25,6 +25,7 @@ http://www.springframework.org/schema/beans/spring-beans.xsd">
     <bean id="note" class="com.epam.enote.entities.Note">
         <property name="title" value="kazoo stuff"/>
         <property name="content" value="fun fun fun fun fun fun fun fun fun"/>
+        <property name="notepad" ref="notepad"/>
     </bean>
 
     <bean id="note2" class="com.epam.enote.entities.Note">

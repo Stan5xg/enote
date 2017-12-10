@@ -2,9 +2,12 @@ package db;
 
 import com.epam.enote.config.AppConfig;
 import com.epam.enote.entities.Note;
+import com.epam.enote.entities.Notepad;
 import com.epam.enote.entities.User;
 import com.epam.enote.repos.NoteRepo;
+import com.epam.enote.repos.NotepadRepo;
 import com.epam.enote.repos.UserRepo;
+import org.h2.tools.Server;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -15,6 +18,8 @@ import org.springframework.context.support.ClassPathXmlApplicationContext;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
+import java.sql.Connection;
+import java.sql.DriverManager;
 import java.sql.SQLException;
 import java.util.List;
 import java.util.NoSuchElementException;
@@ -32,19 +37,43 @@ public class NoteRepoTest {
     private ApplicationContext appContext;
 
     @Autowired
+    private NotepadRepo notepadRepo;
+
+    @Autowired
+    private UserRepo userRepo;
+
+    @Autowired
     private NoteRepo noteRepo;
 
     ConfigurableApplicationContext configurableApplicationContext;
 
     @Before
-    public void setUp() {
+    public void setUp(){
         configurableApplicationContext = new ClassPathXmlApplicationContext("db/testData.xml");
-
+        userRepo.deleteAll();
+        notepadRepo.deleteAll();
         Note note = (Note) configurableApplicationContext.getBean("note");
-        if (!noteRepo.existsById(DEFAULT_ID)) {
-            noteRepo.save(note);
-        }
+        Notepad notepad = note.getNotepad();
+        User user = notepad.getUser();
+        userRepo.save(user);
+
+//        notepadRepo.save(notepad);
+//        noteRepo.save(note);
+//        System.out.println(note);
+//        if (!noteRepo.existsById(DEFAULT_ID)) {
+//            noteRepo.save(note);
+//        }
     }
+
+    @Test
+    public void name() throws SQLException, InterruptedException {
+        Server webServer = Server.createWebServer("-web", "-webAllowOthers", "-webPort", "8082");
+        webServer.start();
+        while (true) ;
+    }
+
+
+
 
     @Test
     public void testUserRepo() {

@@ -85,6 +85,5 @@ public class UserRepoTest {
         assertNotNull(userRepo.findById(user.getId()));
         userRepo.delete(user);
         assertEquals(userRepo.findById(user.getId()), Optional.empty());
-
     }
 }

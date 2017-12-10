@@ -58,14 +58,9 @@ public class NoteRepoTest {
             noteRepo.save(note);
         }
     }
-//
-//    @Test
-//    public void name() {
-//        System.out.println();
-//    }
 
 //    @Test
-//    public void name() throws SQLException, InterruptedException {
+//    public void startServer() throws SQLException, InterruptedException {
 //        Server webServer = Server.createWebServer("-web", "-webAllowOthers", "-webPort", "8082");
 //        webServer.start();
 //        while (true) ;
@@ -81,39 +76,44 @@ public class NoteRepoTest {
     @Test
     public void testFindAll() {
         Note anotherNote = (Note) configurableApplicationContext.getBean("note2");
-        noteRepo.save(anotherNote);
+        Notepad notepad = anotherNote.getNotepad();
+        notepad.addNote(anotherNote);
+        User user = notepad.getUser();
+        user.addNotepad(notepad);
+        userRepo.save(user);
+        List<Note> notes = noteRepo.findAll();
+        assertTrue(notes.size() == 2);
+    }
 
-//        List<Note> notes = noteRepo.findAll();
-//        assertTrue(notes.size() == 2);
-//    }
+    @Test
+    public void testNoFindById() {
+        assertEquals(noteRepo.findById(NOT_EXISTENT_ID), Optional.empty());
+    }
 
-//    @Test(expected = NoSuchElementException.class)
-//    public void testNoFindById() {
-//        userRepo.findById(NOT_EXISTENT_ID+99999);
-//    }
-//
-//    @Test
-//    public void testFindById() {
-//        assertNotNull(userRepo.findById(DEFAULT_ID));
-//    }
-//
-//
-//    @Test
-//    public void testUpdate() {
-//        Note noteBean = (Note) configurableApplicationContext.getBean("note");
-//        Note note = noteRepo.findAllByTitle(noteBean.getTitle()).get(0);
-//        note.setContent("mew mew mew mew mew mew mew mew");
-//        noteRepo.saveAndFlush(note);
-//        Note noteFromDb = noteRepo.getOne(note.getId());
-//        assertEquals(note, noteFromDb);
-//    }
+    @Test
+    public void testFindById() {
+        assertNotNull(userRepo.findById(DEFAULT_ID));
+    }
 
-//    @Test
-//    public void testDelete() {
-//        User user = userRepo.findOneByUsername("Stan");
-//        assertNotNull(userRepo.findById(user.getId()));
-//        userRepo.delete(user);
-//        assertEquals(userRepo.findById(user.getId()), Optional.empty());
-//
-//    }
+
+    @Test
+    public void testUpdate() {
+        Note noteBean = (Note) configurableApplicationContext.getBean("note");
+        Note note = noteRepo.findAllByTitle(noteBean.getTitle()).get(0);
+        System.out.println(note);
+        note.setContent("mew mew mew mew mew mew mew mew");
+        userRepo.saveAndFlush(note.getNotepad().getUser());
+        Note noteFromDb = noteRepo.findAllByTitle(note.getTitle()).get(0);
+        noteFromDb.getNotepad();
+        System.out.println(noteFromDb);
+    }
+
+    @Test
+    public void testDelete() {
+        Note noteBean = (Note) configurableApplicationContext.getBean("note");
+        Note note = noteRepo.findAllByTitle(noteBean.getTitle()).get(0);
+        assertNotNull(noteRepo.findById(note.getId()));
+        noteRepo.delete(note);
+        assertEquals(noteRepo.findById(note.getId()), Optional.empty());
+    }
 }

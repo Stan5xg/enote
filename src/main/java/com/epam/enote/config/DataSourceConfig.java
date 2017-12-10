@@ -35,7 +35,7 @@ public class DataSourceConfig implements DataConfig{
         Properties hibernateProp = new Properties();
         hibernateProp.put("hibernate.dialect", "org.hibernate.dialect.H2Dialect");
         // notice different parameter values for a production environment
-        hibernateProp.put("hibernate.hbm2ddl.auto", "update");
+        hibernateProp.put("hibernate.hbm2ddl.auto", "create-drop");
         hibernateProp.put("hibernate.show_sql", false);
         return hibernateProp;
     }

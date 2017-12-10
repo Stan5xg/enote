@@ -20,6 +20,7 @@ import java.util.Optional;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertTrue;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(classes = {AppConfig.class})
@@ -38,9 +39,12 @@ public class UserRepoTest {
     @Before
     public void setUp() {
         configurableApplicationContext = new ClassPathXmlApplicationContext("db/testData.xml");
-        userRepo.save((User) configurableApplicationContext.getBean("user"));
-    }
 
+        User user = (User) configurableApplicationContext.getBean("user");
+        if (!userRepo.existsById(DEFAULT_ID)) {
+            userRepo.save(user);
+        }
+    }
 
     @Test
     public void testUserRepo() {
@@ -49,10 +53,10 @@ public class UserRepoTest {
     }
 
     @Test
-    public void newTest() throws SQLException {
-        System.out.println(userRepo.findAll().size());
+    public void testFindAll() throws SQLException {
+        userRepo.save((User) configurableApplicationContext.getBean("user2"));
         List<User> users = userRepo.findAll();
-        System.out.println(users);
+        assertTrue(users.size() == 2);
     }
 
     @Test(expected = NoSuchElementException.class)

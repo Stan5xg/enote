@@ -26,11 +26,11 @@ public class Notepad {
     @Column(name="name", nullable = false, unique = true)
     private String name;
 
-    @ManyToOne
+    @ManyToOne(cascade = {CascadeType.ALL})
     @JoinColumn(name = "user_id", nullable = false)
     private User user;
 
-   @OneToMany(mappedBy = "notepad", cascade = {CascadeType.ALL})
+   @OneToMany(fetch = FetchType.EAGER, mappedBy = "notepad", cascade = {CascadeType.ALL})
     private Set<Note> notes = new HashSet<>();
 
     public boolean addNote(Note note) {

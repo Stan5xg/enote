@@ -27,7 +27,7 @@ public class Note {
     @Column(name = "content", nullable = true)
     private String content;
 
-    @ManyToOne
+    @ManyToOne(cascade = {CascadeType.ALL})
     @JoinColumn(name = "notepad_id", nullable = false)
     private Notepad notepad;
 

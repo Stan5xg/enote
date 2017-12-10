@@ -31,6 +31,7 @@ http://www.springframework.org/schema/beans/spring-beans.xsd">
     <bean id="note2" class="com.epam.enote.entities.Note">
         <property name="title" value="what is love"/>
         <property name="content" value="baby don't hurt me, don't hurt me, no more"/>
+        <property name="notepad" ref="notepad"/>
     </bean>
 
     <bean id="notepad" class="com.epam.enote.entities.Notepad">

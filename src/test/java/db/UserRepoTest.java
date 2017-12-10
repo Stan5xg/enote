@@ -76,7 +76,7 @@ public class UserRepoTest {
         user.setPasswordHash("new");
         userRepo.saveAndFlush(user);
 
-        assertEquals("new", user.getPasswordHash());
+        assertEquals("new", userRepo.findOneByUsername(user.getUsername()).getPasswordHash());
     }
 
     @Test

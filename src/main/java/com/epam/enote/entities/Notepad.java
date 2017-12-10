@@ -16,8 +16,8 @@ public class Notepad {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private int id;
 
-    @NotEmpty
-    @Column(name="name", nullable = false, unique = true)
+    @Basic
+    @Column(name="name", nullable = false)
     private String name;
 
     @ManyToOne
@@ -26,9 +26,4 @@ public class Notepad {
 
     @OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
     private Set<Note> notes = new HashSet<>();
-
-    public boolean addNote(Note note) {
-        note.setNotepad(this);
-        return notes.add(note);
-    }
 }

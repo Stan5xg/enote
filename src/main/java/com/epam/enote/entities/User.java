@@ -3,6 +3,7 @@ package com.epam.enote.entities;
 import lombok.Data;
 import org.hibernate.validator.constraints.NotEmpty;
 
+import javax.persistence.Basic;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -25,20 +26,15 @@ public class User {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private int id;
 
-    @NotEmpty
-    @Column(name="username", nullable = false, unique = true)
+    @Basic
+    @Column(name="username", nullable = false)
     private String username;
 
-    @NotEmpty
-    @Column(name = "password_hash")
+    @Basic
+    @Column(name = "password_hash", nullable = false)
     public String passwordHash;
 
     @OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
     private Set<Notepad> notepads = new HashSet<>();
-
-    public boolean addNotepad(Notepad notepad) {
-        notepad.setUser(this);
-        return notepads.add(notepad);
-    }
 }
 

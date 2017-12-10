@@ -12,6 +12,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.ConfigurableApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
+import org.springframework.test.annotation.DirtiesContext;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
@@ -26,6 +27,8 @@ import static org.junit.Assert.assertTrue;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(classes = {AppConfig.class})
+
+@DirtiesContext(classMode = DirtiesContext.ClassMode.AFTER_EACH_TEST_METHOD)
 public class TagRepoTest {
 
     public static final int DEFAULT_ID = 1;
@@ -73,7 +76,7 @@ public class TagRepoTest {
 
     @Test
     public void testUpdate() {
-        Tag tag = tagRepo.findOneByName("song");
+        Tag tag = tagRepo.findOneByName("fun");
         tag.setName("meme");
         tagRepo.saveAndFlush(tag);
         Tag tagAltered = tagRepo.findOneByName("meme");

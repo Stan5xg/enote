@@ -54,9 +54,7 @@ public class NotepadRepoTest {
         notepad = configurableApplicationContext.getBean(Notepad.class);
         user = notepad.getUser();
         user.addNotepad(notepad);
-        if (userRepo.findAll().isEmpty()) {
-            userRepo.save(user);
-        }
+        userRepo.save(user);
     }
 
     @Test
@@ -78,10 +76,6 @@ public class NotepadRepoTest {
 
     @Test
     public void testUpdate() {
-        if (notepadRepo.findAll().isEmpty()) {
-            user.addNotepad(notepad);
-            userRepo.saveAndFlush(user);
-        }
         Notepad notepad = notepadRepo.findAllByUserId(user.getId()).get(0);
         notepad.setName("new");
         notepadRepo.saveAndFlush(notepad);

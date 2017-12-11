@@ -56,10 +56,7 @@ public class NoteRepoTest {
         userRepo.deleteAll();
         notepadRepo.deleteAll();
         Note note = (Note) configurableApplicationContext.getBean("note");
-
-        if (!noteRepo.existsById(DEFAULT_ID)) {
-            noteRepo.save(note);
-        }
+        noteRepo.save(note);
     }
 
 //    @Test

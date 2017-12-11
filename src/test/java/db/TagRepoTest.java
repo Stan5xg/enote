@@ -45,9 +45,7 @@ public class TagRepoTest {
     public void setUp() {
         configurableApplicationContext = new ClassPathXmlApplicationContext("db/testData.xml");
         Tag note = (Tag) configurableApplicationContext.getBean("tag");
-        if (!tagRepo.existsById(DEFAULT_ID)) {
-            tagRepo.save(note);
-        }
+        tagRepo.save(note);
     }
 
     @Test

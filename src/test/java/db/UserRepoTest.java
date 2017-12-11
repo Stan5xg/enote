@@ -43,9 +43,7 @@ public class UserRepoTest {
         configurableApplicationContext = new ClassPathXmlApplicationContext("db/testData.xml");
 
         User user = (User) configurableApplicationContext.getBean("user");
-        if (!userRepo.existsById(DEFAULT_ID)) {
-            userRepo.save(user);
-        }
+        userRepo.save(user);
     }
 
     @Test

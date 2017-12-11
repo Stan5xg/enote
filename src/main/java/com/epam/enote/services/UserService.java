@@ -16,7 +16,7 @@ public interface UserService {
 
     User getById(int id);
 
-    User getByName(int id);
+    User getByName(String username);
 
     List<User> getAll();
 }

@@ -1,6 +1,7 @@
 package com.epam.enote.services.inplementations;
 
 import com.epam.enote.config.AppConfig;
+import com.epam.enote.entities.User;
 import com.epam.enote.repos.UserRepo;
 import com.epam.enote.services.UserService;
 import org.junit.Before;
@@ -13,7 +14,8 @@ import org.springframework.context.support.ClassPathXmlApplicationContext;
 import org.springframework.test.context.ContextConfiguration;
 
 import static org.junit.Assert.*;
-import static org.mockito.Mockito.times;
+import static org.mockito.Matchers.anyInt;
+import static org.mockito.Mockito.*;
 
 @RunWith(MockitoJUnitRunner.class)
 @ContextConfiguration(classes = AppConfig.class)
@@ -33,7 +35,8 @@ public class UserServiceImplTest {
 
     @Test
     public void create() throws Exception {
-
+        userService.create((User) ctx.getBean("user"));
+        verify(userRepo, times(1)).save(any());
     }
 
     @Test

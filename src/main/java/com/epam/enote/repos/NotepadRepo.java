@@ -12,6 +12,6 @@ import java.util.List;
 public interface NotepadRepo extends JpaRepository<Notepad, Integer> {
     List<Notepad> findAllByUserId(int userId);
 
-    @Query("select n from Notepad n where n.name= :nt")
+    @Query("select n from Notepad n where n.name= :nN")
     List<Notepad> findAllByTitle(@Param("nN") String notepadName);
 }

@@ -1,6 +1,7 @@
 package db;
 
 import com.epam.enote.config.AppConfig;
+import com.epam.enote.entities.Note;
 import com.epam.enote.entities.Notepad;
 import com.epam.enote.entities.User;
 import com.epam.enote.repos.NotepadRepo;
@@ -22,10 +23,7 @@ import java.util.List;
 import java.util.NoSuchElementException;
 import java.util.Optional;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertThat;
-import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.*;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(classes = {AppConfig.class})
@@ -73,6 +71,11 @@ public class NotepadRepoTest {
         assertNotNull(notepadRepo.findAllByUserId(user.getId()));
     }
 
+    @Test
+    public void testFindByName() {
+        assertNotNull(notepadRepo.findByName(notepad.getName()));
+        assertEquals(notepad, notepadRepo.findByName(notepad.getName()));
+    }
 
     @Test
     public void testUpdate() {
@@ -81,6 +84,21 @@ public class NotepadRepoTest {
         notepadRepo.saveAndFlush(notepad);
         assertEquals("new", notepadRepo.findAllByUserId(user.getId()).get(0).getName());
     }
+
+    @Test
+    public void testUpdate2() {
+        Notepad notepad = notepadRepo.findAllByUserId(user.getId()).get(0);
+        Note note = (Note) configurableApplicationContext.getBean("note");
+        assertEquals(0, notepad.getNotes().size());
+        notepad.addNote(note);
+        notepadRepo.saveAndFlush(notepad);
+        Notepad notepadFromDb = notepadRepo.findAllByUserId(user.getId()).get(0);
+        assertEquals(1, notepadFromDb.getNotes().size());
+
+    }
+
+
+
 
     @Test
     public void testDelete() {

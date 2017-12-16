@@ -1,4 +1,4 @@
-package com.epam.enote.services.inplementations;
+package com.epam.enote.services.implementations;
 
 import com.epam.enote.config.AppConfig;
 import com.epam.enote.entities.User;

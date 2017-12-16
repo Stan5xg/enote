@@ -1,4 +1,4 @@
-package com.epam.enote.services.inplementations;
+package com.epam.enote.services.implementations;
 
 import com.epam.enote.entities.User;
 import com.epam.enote.repos.UserRepo;

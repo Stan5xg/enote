@@ -1,5 +1,6 @@
 package com.epam.enote.repos;
 
+import com.epam.enote.entities.Note;
 import com.epam.enote.entities.Notepad;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
@@ -12,6 +13,6 @@ import java.util.List;
 public interface NotepadRepo extends JpaRepository<Notepad, Integer> {
     List<Notepad> findAllByUserId(int userId);
 
-    @Query("select n from Notepad n where n.name= :nN")
-    List<Notepad> findAllByTitle(@Param("nN") String notepadName);
+    @Query("select n from Notepad n where n.name= :nn")
+    Notepad findByName(@Param("nn") String notepadName);
 }

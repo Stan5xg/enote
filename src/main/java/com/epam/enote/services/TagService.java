@@ -11,5 +11,5 @@ public interface TagService {
 
     void delete(Tag tag);
 
-    List<Tag> findAllByName(String name);
+    Tag findByName(String name);
 }

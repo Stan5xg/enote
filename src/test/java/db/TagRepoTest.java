@@ -44,8 +44,8 @@ public class TagRepoTest {
     @Before
     public void setUp() {
         configurableApplicationContext = new ClassPathXmlApplicationContext("db/testData.xml");
-        Tag note = (Tag) configurableApplicationContext.getBean("tag");
-        tagRepo.save(note);
+        Tag tag = (Tag) configurableApplicationContext.getBean("tag");
+        tagRepo.save(tag);
     }
 
     @Test

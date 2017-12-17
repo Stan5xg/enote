@@ -3,6 +3,8 @@ package com.epam.enote.services;
 import com.epam.enote.entities.Note;
 import com.epam.enote.entities.Tag;
 
+import java.util.List;
+
 public interface NoteService {
 
     void create(Note note);
@@ -11,7 +13,7 @@ public interface NoteService {
 
     void delete(Note note);
 
-    void getByTitle(String title);
+    List<Note> findAllByTitle(String title);
 
-    void getByTag(Tag tag);
+    List<Note> findAllByTag(Tag tag);
 }
